@@ -2,13 +2,13 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import {
   Environment,
   MeshTransmissionMaterial,
-  OrbitControls,
+  // OrbitControls,
   Text,
   useGLTF,
 } from "@react-three/drei";
 import React, { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
-import { Leva, useControls } from "leva";
+// import { Leva, useControls } from "leva";
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 interface MaterialsProps {
   thickness?: number;
@@ -33,8 +33,8 @@ const Model = ({
   position = [0, 0, 0],
   scale = [1, 1, 1],
   typeModel,
-  materialsProps,
-}: ModelViewerProps) => {
+}: // materialsProps,
+ModelViewerProps) => {
   const { scene, animations } = useGLTF(src);
 
   const sceneClone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
@@ -179,5 +179,7 @@ const ModelViewer = React.memo(
     );
   }
 );
+
+ModelViewer.displayName = "ModelViewer";
 
 export default ModelViewer;
