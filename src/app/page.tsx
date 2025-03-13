@@ -14,6 +14,7 @@ export default function Home() {
         position={[1, 0.2, -0.1]}
         src="/models/untitled.glb"
       />
+      <div className="text-[400px] absolute top-0 -z-10">ONIN</div>
     </div>
   );
 }

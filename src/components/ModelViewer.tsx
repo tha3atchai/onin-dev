@@ -1,14 +1,15 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   Environment,
+  Html,
   MeshTransmissionMaterial,
-  // OrbitControls,
+  OrbitControls,
   Text,
   useGLTF,
 } from "@react-three/drei";
 import React, { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
-// import { Leva, useControls } from "leva";
+import { Leva, useControls } from "leva";
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 interface MaterialsProps {
   thickness?: number;
@@ -54,27 +55,24 @@ ModelViewerProps) => {
     }
   });
 
-  // const materialProps =
-  //   materialsProps ??
-  //   useControls({
-  //     thickness: { value: 2.45, min: 0, max: 3, step: 0.05 },
-  //     roughness: { value: 0.2, min: 0, max: 1, step: 0.1 },
-  //     transmission: { value: 0.9, min: 0, max: 1, step: 0.1 },
-  //     ior: { value: 0.4, min: 0, max: 3, step: 0.1 },
-  //     chromaticAberration: { value: 0.96, min: 0, max: 1 },
-  //     backside: { value: true },
-  //     opacity: { value: 0.75, min: 0, max: 1, step: 0.05 },
-  //   });
+  const materialProps = useControls({
+    thickness: { value: 0.2, min: 0, max: 3, step: 0.05 },
+    roughness: { value: 0, min: 0, max: 1, step: 0.1 },
+    transmission: { value: 1, min: 0, max: 1, step: 0.1 },
+    ior: { value: 1.2, min: 0, max: 3, step: 0.1 },
+    chromaticAberration: { value: 0.02, min: 0, max: 1 },
+    backside: { value: true },
+  });
 
-  const materialProps = {
-    thickness: 2.45,
-    roughness: 0.2,
-    transmission: 0.9,
-    ior: 0.4,
-    chromaticAberration: 0.96,
-    backside: true,
-    opacity: 0.75,
-  };
+  // const materialProps = {
+  //   thickness: 2.45,
+  //   roughness: 0.2,
+  //   transmission: 0.9,
+  //   ior: 0.4,
+  //   chromaticAberration: 0.96,
+  //   backside: true,
+  //   opacity: 0.75,
+  // };
 
   useEffect(() => {
     if (typeModel === "texture") {
@@ -105,13 +103,14 @@ ModelViewerProps) => {
               child.geometry.center();
               return (
                 <mesh
+                  // ref={torus}
                   key={index}
                   geometry={child.geometry}
                   rotation={[0, 0.9, 1.2]}
                 >
                   <MeshTransmissionMaterial
                     {...materialProps}
-                    transparent={true}
+                    // transparent={true}
                   />
                 </mesh>
               );
@@ -148,7 +147,7 @@ const ModelText = ({
     <Text
       position={positionText}
       fontSize={4}
-      color="black"
+      color="white"
       anchorX="center"
       anchorY="middle"
       lineHeight={1}
@@ -163,17 +162,37 @@ const ModelViewer = React.memo(
     return (
       <Suspense fallback={<div>Loading...</div>}>
         <Canvas style={{ width: "100%", height: "100%" }}>
-          {/* <OrbitControls /> */}
+          <OrbitControls />
           <ambientLight intensity={1.5} color="white" />
           <directionalLight position={[5, 5, 5]} intensity={2} color="white" />
+          <Html position={[0, 0, 0]} zIndexRange={[-1, 0]}>
+            <div className="text-[100px]">ONIN</div>
+          </Html>
           <Model
             src={src}
             position={position}
             scale={scale}
             typeModel={typeModel}
           />
+          <Model
+            src={src}
+            position={[0, 2, 2]}
+            scale={scale}
+            typeModel={typeModel}
+          />
           <Environment preset="city" />
           <ModelText text={text} positionText={[0, 0, 0]} />
+          <ModelText text={text} positionText={[0, 3, 0]} />
+          <ModelText text={text} positionText={[0, -3, 0]} />
+          <Text fontSize={14} letterSpacing={-0.025} color="black">
+            {text}
+            <Html
+              style={{ color: "transparent", fontSize: "33.5em" }}
+              transform
+            >
+              {text}
+            </Html>
+          </Text>
         </Canvas>
       </Suspense>
     );
