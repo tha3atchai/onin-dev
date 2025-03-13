@@ -37,7 +37,7 @@ const useLenis = () => {
 const HeadScene = ({ mouse }: { mouse: { x: number; y: number } }) => {
   return (
     <div className="w-full h-full">
-      <Canvas>
+      <Canvas style={{ pointerEvents: "none" }}>
         <Environment preset="city" />
         <RotatingModel mouse={mouse} />
       </Canvas>
@@ -179,7 +179,7 @@ function Home() {
     >
       <motion.div
         className="fixed w-screen h-screen"
-        style={{ x: xOffset }}
+        style={{ x: xOffset, pointerEvents: "none" }}
         transition={{ duration: 1.5, ease: "easeInOut" }}
       >
         <HeadScene mouse={mouse} />
