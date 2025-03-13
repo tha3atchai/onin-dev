@@ -140,6 +140,8 @@ const Model = forwardRef<THREE.Group, ModelViewerProps>(
   }
 );
 
+Model.displayName = "Model";
+
 const ModelViewer = React.memo(
   forwardRef<THREE.Group, ModelViewerProps>(
     ({ src, position, scale, typeModel, rotation }: ModelViewerProps, ref) => {
