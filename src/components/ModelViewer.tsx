@@ -9,7 +9,6 @@ import React, {
   useRef,
 } from "react";
 import * as THREE from "three";
-import { useControls } from "leva";
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 interface MaterialsProps {
   thickness?: number;
@@ -53,24 +52,25 @@ const Model = forwardRef<THREE.Group, ModelViewerProps>(
       }
     });
 
-    const materialProps = useControls({
-      thickness: { value: 0, min: 0, max: 3, step: 0.05 },
-      roughness: { value: 0.3, min: 0, max: 1, step: 0.1 },
-      transmission: { value: 0.2, min: 0, max: 1, step: 0.1 },
-      ior: { value: 0.3, min: 0, max: 3, step: 0.1 },
-      chromaticAberration: { value: 1, min: 0, max: 1 },
-      backside: { value: true },
-    });
+    // const materialProps = useControls({
+    //   thickness: { value: 3, min: 0, max: 3, step: 0.05 },
+    //   roughness: { value: 0.3, min: 0, max: 1, step: 0.1 },
+    //   transmission: { value: 1.0, min: 0, max: 1, step: 0.1 },
+    //   ior: { value: 0.2, min: 0, max: 3, step: 0.1 },
+    //   chromaticAberration: { value: 1, min: 0, max: 1 },
+    //   opacity: { value: 0.9, min: 0, max: 1 },
+    //   backside: { value: true },
+    // });
 
-    // const materialProps = {
-    //   thickness: 2.45,
-    //   roughness: 0.2,
-    //   transmission: 0.9,
-    //   ior: 0.4,
-    //   chromaticAberration: 0.96,
-    //   backside: true,
-    //   opacity: 0.75,
-    // };
+    const materialProps = {
+      thickness: 3,
+      roughness: 0.3,
+      transmission: 1,
+      ior: 0.2,
+      chromaticAberration: 1,
+      backside: true,
+      opacity: 0.9,
+    };
 
     useEffect(() => {
       if (typeModel === "texture") {
