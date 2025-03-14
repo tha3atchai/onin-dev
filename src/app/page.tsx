@@ -7,6 +7,7 @@ import { Environment } from "@react-three/drei";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import * as THREE from "three";
 import Lenis from "lenis";
+import GridFlip from "@/components/GridFlip";
 
 const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
   ssr: false,
@@ -49,7 +50,7 @@ const RotatingModel = ({ mouse }: { mouse: { x: number; y: number } }) => {
   const modelRef = useRef<THREE.Group>(null);
   const targetRotation = useRef({ x: 0, y: 0 });
 
-  const initialPosition = useRef<[number, number, number]>([0, 0, -1.5]);
+  const initialPosition = useRef<[number, number, number]>([-0.05, 0, -1]);
   const movedPosition = useRef<[number, number, number]>([0, 0.3, 0.1]);
 
   const initialScale = useRef<[number, number, number]>([0.01, 0.01, 0.01]);
@@ -173,29 +174,28 @@ function Home() {
 
   return (
     <div
-      className="h-[400vh] relative"
+      className="h-[400vh] relative bg-[#101010]"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       <motion.div
-        className="fixed w-screen h-screen"
+        className="fixed w-screen h-screen z-30"
         style={{ x: xOffset, pointerEvents: "none" }}
         transition={{ duration: 1.5, ease: "easeInOut" }}
       >
         <HeadScene mouse={mouse} />
       </motion.div>
-      <div className="h-screen flex justify-center items-center">
-        <h1 className="text-black text-[400px]">ONIN</h1>
+      <div className="h-screen px-2 pt-2 overflow-clip relative">
+        <GridFlip />
+        <h1 className="text-white text-[420px] absolute tranfsform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-10">
+          ONIN
+        </h1>
       </div>
-      <div className="h-screen flex justify-center items-center">
-        <h1 className="text-black text-[400px]">Page 2</h1>
+      <div className="h-screen px-2 pt-[2px] overflow-clip relative">
+        <GridFlip />
       </div>
-      <div className="h-screen flex justify-center items-center">
-        <h1 className="text-black text-[400px]">Page 3</h1>
-      </div>
-      <div className="h-screen flex justify-center items-center">
-        <h1 className="text-black text-[400px]">page 4</h1>
-      </div>
+      <div className="h-screen flex justify-center items-center"></div>
+      <div className="h-screen flex justify-center items-center"></div>
     </div>
   );
 }
